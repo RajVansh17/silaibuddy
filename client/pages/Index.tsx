@@ -84,11 +84,6 @@ export default function Index() {
       });
       const data = await res.json();
       
-      // Debug logging - remove after fixing
-      console.log("Response status:", res.status);
-      console.log("Response OK:", res.ok);
-      console.log("Response data:", data);
-      
       if (res.ok) {
         // Successful login
         toast({ title: data.message || "Login successful!" });

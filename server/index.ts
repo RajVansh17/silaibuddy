@@ -2,7 +2,7 @@ import "dotenv/config";
 import express from "express";
 import cors from "cors";
 import { handleDemo } from "./routes/demo";
-import {authRouter } from "./routes/demo";
+import authRouter from "./routes/auth";
 import googleAuthRouter from "./routes/googleAuth";
 
 
@@ -22,6 +22,7 @@ export function createServer() {
 
   app.get("/api/demo", handleDemo);
   app.use("/api/auth", authRouter);
+  app.use("/api/auth", googleAuthRouter);
 
   return app;
 }

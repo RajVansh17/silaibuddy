@@ -16,6 +16,10 @@ const otpStore = new Map<string, { code: string; expiresAt: number }>();
 const demoUsers = [
   { phone: "9876543210", password: "password123" },
   { phone: "1234567890", password: "demo" },
+  { phone: "9999999999", password: "test123" },
+  { phone: "8888888888", password: "silai123" },
+  { phone: "7777777777", password: "admin" },
+  { phone: "6666666666", password: "user123" },
 ];
 
 // Helpers

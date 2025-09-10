@@ -84,19 +84,23 @@ export default function Index() {
       });
       const data = await res.json();
       
-      // Since the backend is configured not to return an error, you will always get a successful response here.
-      // You can check for a specific message to differentiate if needed.
-      toast({ title: data.message });
-
-      // Save the token if it exists in the response
-      if (data.token) {
-        localStorage.setItem("token", data.token);
+      if (res.ok) {
+        // Successful login
+        toast({ title: data.message || "Login successful!" });
+        
+        // Save the token if it exists in the response
+        if (data.token) {
+          localStorage.setItem("token", data.token);
+        }
+        
+        // Optionally, you might want to redirect the user after a successful login.
+        // navigate("/dashboard");
+      } else {
+        // Login failed - show error message from backend
+        toast({ title: data.error || "Login failed. Please check your credentials." });
       }
-      
-      // Optionally, you might want to redirect the user after a successful login.
-      // navigate("/dashboard");
     } catch (error) {
-      // This will only catch network errors, not login failures from the backend.
+      // Network errors
       console.error("Login failed:", error);
       toast({ title: "Something went wrong. Please try again." });
     }

@@ -6,7 +6,7 @@ export interface User {
   _id?: ObjectId;
   name: string;
   phone: string;
-  email: string;
+  email?: string;
   password: string;
   verified: boolean;
   createdAt: Date;
@@ -130,7 +130,17 @@ export class UserModel {
       if (collection) {
         // Create unique indexes
         await collection.createIndex({ phone: 1 }, { unique: true });
-        await collection.createIndex({ email: 1 }, { unique: true });
+        // Partial index for email - only index when email field exists and is not empty
+        await collection.createIndex(
+          { email: 1 }, 
+          { 
+            unique: true, 
+            sparse: true,
+            partialFilterExpression: { 
+              email: { $type: "string", $ne: "" } 
+            } 
+          }
+        );
         console.log('MongoDB indexes created successfully');
       }
     } catch (error) {

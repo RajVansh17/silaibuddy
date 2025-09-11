@@ -40,13 +40,18 @@ router.post("/register", async (req, res) => {
     }
 
     // Create new user
-    await UserModel.createUser({
+    const newUserData: any = {
       name,
       phone,
-      email: email || "",
       password,
       verified: false
-    });
+    };
+    
+    if (email) {
+      newUserData.email = email;
+    }
+    
+    await UserModel.createUser(newUserData);
 
     return res.json({ message: "Registered. Please verify OTP." });
   } catch (error) {
